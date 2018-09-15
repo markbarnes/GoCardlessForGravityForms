@@ -102,7 +102,7 @@ if ( method_exists( 'GFForms', 'include_payment_addon_framework' ) ) {
 		 *
 		 * @var bool|null $has_this_feed
 		 */
-		private static $has_this_feed = null;
+		private $has_this_feed = null;
 
 		/**
 		 * Constructor.

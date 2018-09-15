@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: FB GoCardless Hosted for Gravity Forms
+ * Plugin Name: FB GoCardless Hosted for Gravity Forms (modified by Mark Barnes)
  * Description: Provides an integration with the GoCardless redirect flows hosted payment pages.
  * Plugin URI: https://www.fatbeehive.com/
  * Author: Fat Beehive Ltd
- * Version: 1.1
+ * Version: 1.1.1
  *
  * @package fatbeehive
  */
