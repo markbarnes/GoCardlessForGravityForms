@@ -513,7 +513,7 @@ if ( method_exists( 'GFForms', 'include_payment_addon_framework' ) ) {
 							if ( ! $success_redirect_url && 'page' === $confirmation['type'] ) {
 								$success_redirect_url = get_permalink( $confirmation['pageId'] );
 							} elseif ( ! $success_redirect_url && 'redirect' === $confirmation['type'] ) {
-								$success_redirect_url = get_permalink( $confirmation['url'] );
+								$success_redirect_url = $confirmation['url'];
 							}
 						}
 					}
