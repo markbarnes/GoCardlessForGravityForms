@@ -492,19 +492,42 @@ if ( method_exists( 'GFForms', 'include_payment_addon_framework' ) ) {
 
 					// Set up the payment.
 					$gocardless_client = $this->get_gocardless_client();
-					$gocardless_client->payments()->create( array(
-						'params' => array(
-							'amount' => ( ( (int) gform_get_meta( $entry['id'], 'gocardless_direct_debit_amount' ) ) * 100 ),
-							'currency' => 'GBP',
-							'links' => array(
-								'mandate' => $mandate_id,
+
+					$action = apply_filters('fb_gf_gocardless_action', 'payment', $entry, $form);
+
+					if ( 'payment' == $action ) {
+						$gocardless_client->payments()->create( array(
+							'params' => array(
+								'amount' => (int) ( ( gform_get_meta( $entry['id'], 'gocardless_direct_debit_amount' ) ) * 100 ),
+								'currency' => 'GBP',
+								'name' => apply_filters('fb_gf_gocardless_payment_name', '', $entry, $form),
+								'links' => array(
+									'mandate' => $mandate_id,
+								),
+								'metadata' => array(
+									'site_url' => site_url(),
+									'gravity_forms_entry_id' => $entry['id'],
+								),
 							),
-							'metadata' => array(
-								'site_url' => site_url(),
-								'gravity_forms_entry_id' => $entry['id'],
+						) );
+					} elseif ( 'subscription' == $action ) {
+						$gocardless_client->subscriptions()->create( array(
+							'params' => array(
+								'amount' => (int) ( ( gform_get_meta( $entry['id'], 'gocardless_direct_debit_amount' ) ) * 100 ),
+								'currency' => 'GBP',
+								'interval' => apply_filters('fb_gf_gocardless_subscription_interval', 1, $entry, $form),
+								'interval_unit' => apply_filters('fb_gf_gocardless_subscription_interval_unit', 'yearly', $entry, $form),
+								'name' => apply_filters('fb_gf_gocardless_subscription_name', '', $entry, $form),
+								'links' => array(
+									'mandate' => $mandate_id,
+								),
+								'metadata' => array(
+									'site_url' => site_url(),
+									'gravity_forms_entry_id' => $entry['id'],
+								),
 							),
-						),
-					) );
+						) );
+					}
 
 					// Determine redirect url from gravity forms settings.
 					$success_redirect_url = false;
